@@ -22,19 +22,61 @@ function createStaff(){
      & checkEmpty(staff.date,"#tbNgay","Ngày làm việc") 
      & checkEmpty(staff.salary,"#tbLuongCB","Lương cơ bản") 
      & checkEmpty(staff.position,"#tbChucVu","Chức vụ") 
-     & checkEmpty(staff.time,"#tbGiolam","Thời gian làm");
+     & checkEmpty(staff.time,"#tbGiolam","Thời gian làm")
     
-     if(checkEmpty(staff.name,"#tbTen","Tên nhân viên"));
+     if(checkEmpty(staff.user,"#tbTKNV","User"))
      {
-         valid &= checkLetter(staff.name,"#tbTen","Tên nhân viên");
+        //check user từ 4 đến 6 ký tự
+        valid &= checkLength(staff.user,"#tbTKNV","User",4,6)
      }
 
-    valid &= checkEmail(staff.email,"#tbEmail","Email nhân viên");
-    valid &= checkLength(staff.user,"#tbTKNV","User",4,6);
-    if(checkNumber(staff.salary,"#tbLuongCB","Lương cơ bản") & checkNumber(staff.time,"#tbGiolam","Thời gian làm"))
-    {
-        valid &= checkValue(staff.salary,"#tbLuongCB","Lương cơ bản",1000000,20000000) & checkValue(staff.time,"#tbGiolam","Thời gian làm",80,200);
-    }
+     if(checkEmpty(staff.date,"#tbNgay","Ngày làm việc"))
+     {
+        //check định dạng ngày
+        valid &= checkDate(staff.date,"#tbNgay","Ngày làm việc")
+     }
+
+     if(checkEmpty(staff.name,"#tbTen","Tên nhân viên"))
+     {
+        console.log(staff.name);
+        //check name phải là ký tự
+        valid &= checkLetter(staff.name,"#tbTen","Tên nhân viên")
+     }
+
+     if(checkEmpty(staff.email,"#tbEmail","Email nhân viên"))
+     {
+        //check mail phải đúng định dạng
+        valid &= checkEmail(staff.email,"#tbEmail","Email nhân viên")
+     }
+
+     if(checkEmpty(staff.password,"#tbMatKhau","Mật khẩu"))
+     {
+        //check password từ 6 đến 10 ký tự
+        valid &= checkLength(staff.password,"#tbMatKhau","Mật khẩu",6,10)
+        if(checkLength(staff.password,"#tbMatKhau","Mật khẩu",6,10))
+        {
+            valid &= checkPass(staff.password,"#tbMatKhau","Mật khẩu")
+        }
+     }
+
+     if(checkEmpty(staff.salary,"#tbLuongCB","Lương cơ bản"))
+     {
+        if(checkNumber(staff.salary,"#tbLuongCB","Lương cơ bản"))
+        {
+            valid &= checkValue(staff.salary,"#tbLuongCB","Lương cơ bản",1000000,20000000); 
+            
+        }
+     }
+     if( checkEmpty(staff.time,"#tbGiolam","Thời gian làm"))
+     {
+        if( checkNumber(staff.time,"#tbGiolam","Thời gian làm"))
+        {
+            valid &= checkValue(staff.time,"#tbGiolam","Thời gian làm",80,200);
+        }
+     }
+    
+
+    valid &= checkPosition(staff.position,"#tbChucVu")
      
     if(!valid)
      {
@@ -207,6 +249,76 @@ function saveEdit()
     staffUpdate.position =  document.querySelector("#chucvu").value;
     staffUpdate.time =  document.querySelector("#gioLam").value 
 
+    var valid = true;
+
+        valid &= checkEmpty(staffUpdate.user,"#tbTKNV","User") 
+        & checkEmpty(staffUpdate.name,"#tbTen","Tên nhân viên") 
+        & checkEmpty(staffUpdate.email,"#tbEmail","Email nhân viên") 
+        & checkEmpty(staffUpdate.password,"#tbMatKhau","Mật khẩu") 
+        & checkEmpty(staffUpdate.date,"#tbNgay","Ngày làm việc") 
+        & checkEmpty(staffUpdate.salary,"#tbLuongCB","Lương cơ bản") 
+        & checkEmpty(staffUpdate.position,"#tbChucVu","Chức vụ") 
+        & checkEmpty(staffUpdate.time,"#tbGiolam","Thời gian làm")
+       
+        if(checkEmpty(staffUpdate.user,"#tbTKNV","User"))
+        {
+           //check user từ 4 đến 6 ký tự
+           valid &= checkLength(staffUpdate.user,"#tbTKNV","User",4,6)
+        }
+
+        if(checkEmpty(staffUpdate.date,"#tbNgay","Ngày làm việc"))
+        {
+            //check định dạng ngày
+            valid &= checkDate(staffUpdate.date,"#tbNgay","Ngày làm việc")
+        }
+   
+        if(checkEmpty(staffUpdate.name,"#tbTen","Tên nhân viên"))
+        {
+           //check name phải là ký tự
+           valid &= checkLetter(staffUpdate.name,"#tbTen","Tên nhân viên")
+        }
+   
+        if(checkEmpty(staffUpdate.email,"#tbEmail","Email nhân viên"))
+        {
+           //check mail phải đúng định dạng
+           valid &= checkEmail(staffUpdate.email,"#tbEmail","Email nhân viên")
+        }
+   
+        if(checkEmpty(staffUpdate.password,"#tbMatKhau","Mật khẩu"))
+        {
+           //check password từ 6 đến 10 ký tự
+           valid &= checkLength(staffUpdate.password,"#tbMatKhau","Mật khẩu",6,10)
+           if(checkLength(staffUpdate.password,"#tbMatKhau","Mật khẩu",6,10))
+           {
+               valid &= checkPass(staffUpdate.password,"#tbMatKhau","Mật khẩu")
+           }
+        }
+   
+        if(checkEmpty(staffUpdate.salary,"#tbLuongCB","Lương cơ bản"))
+        {
+           if(checkNumber(staffUpdate.salary,"#tbLuongCB","Lương cơ bản"))
+           {
+               valid &= checkValue(staffUpdate.salary,"#tbLuongCB","Lương cơ bản",1000000,20000000); 
+               
+           }
+        }
+        if( checkEmpty(staffUpdate.time,"#tbGiolam","Thời gian làm"))
+        {
+           if( checkNumber(staffUpdate.time,"#tbGiolam","Thời gian làm"))
+           {
+               valid &= checkValue(staffUpdate.time,"#tbGiolam","Thời gian làm",80,200);
+           }
+        }
+       
+   
+       valid &= checkPosition(staffUpdate.position,"#tbChucVu")
+        
+       if(!valid)
+        {
+            return;
+          
+        }
+
     var index = -1;
     for(var i = 0; i< staffList.length; i++)
     {
@@ -218,9 +330,25 @@ function saveEdit()
     }
     if(index !== -1)
     {
-        staffList[i] = JSON.parse(JSON.stringify(staffUpdate));
-        saveLocalStorage(staffList,"arrNV");
-        renderStaffList(staffList);
+        swal({
+            title: "Are you sure?",
+            text: "Bạn có chắc muốn sửa nhân viên này không ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              swal("Nhân viên của bạn đã cập nhật vào hệ thống :)", {
+                icon: "success",
+              });
+              staffList[i] = JSON.parse(JSON.stringify(staffUpdate));
+                saveLocalStorage(staffList,"arrNV");
+                renderStaffList(staffList);
+            } else {
+              swal("Bạn đã hủy cập nhật nhân viên này :(");
+            }
+          });
     }
 }
 

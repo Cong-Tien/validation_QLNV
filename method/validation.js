@@ -12,12 +12,14 @@ function checkEmpty(value,selector,name)
 
 function checkLetter(value,selector,name)
 {
-    var regex = /^[A-Za-z]+$/;
-   if( regex.test(value))
+  debugger
+    var regex = /^[A-Z a-z]+$/;
+   if(regex.test(value))
    {
      document.querySelector(selector).innerHTML = '';
      return true;
    }
+   document.querySelector(selector).style.display = "block";
    document.querySelector(selector).innerHTML = name + ' tất cả phải là ký tự';
    return false;
 }
@@ -30,7 +32,21 @@ function checkNumber(value,selector,name)
      document.querySelector(selector).innerHTML = '';
      return true;
    }
+   document.querySelector(selector).style.display = "block";
    document.querySelector(selector).innerHTML = name + ' tất cả phải là số';
+   return false;
+}
+
+function checkDate(value,selector,name)
+{
+  var regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/ ;
+  if( regex.test(value) )
+   {
+     document.querySelector(selector).innerHTML = '';
+     return true;
+   }
+   document.querySelector(selector).style.display = "block";
+   document.querySelector(selector).innerHTML = name + ' phải đúng định dạng mm/dd/yyyy';
    return false;
 }
 
@@ -48,8 +64,9 @@ function checkEmail(value,selector,name)
 
 function checkLength(value,selector,name,min,max)
 {
-    if(value.length > max || value.length <min)
+    if(value.length > max || value.length < min)
     {
+        document.querySelector(selector).style.display = "block";
         document.querySelector(selector).innerHTML = name + ' từ ' + min + " đến " + max + " ký tự !";
         return false;
     }
@@ -57,10 +74,35 @@ function checkLength(value,selector,name,min,max)
     return true;
 }
 
+function checkPosition(value,selector)
+{
+   if( value !== "Chọn chức vụ")
+   {
+     document.querySelector(selector).innerHTML = '';
+     return true;
+   }
+   document.querySelector(selector).style.display = "block";
+   document.querySelector(selector).innerHTML =  "Mời chọn chức vụ";
+   return false;
+}
+
+function checkPass(value,selector,name,max,min)
+{
+    var regex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/;
+    if( regex.test(value) )
+    {
+      document.querySelector(selector).innerHTML = '';
+      return true;
+    }
+    document.querySelector(selector).innerHTML = name + ' phải bao gồm 1 chữ in hoa, 1 ký tự số và 1 ký tự đặc biệt';
+    return false;
+}
+
 function checkValue(value,selector,name,minValue,maxValue)
 {
     if(Number(value) > maxValue || Number(value) <minValue || value.trim() == "")
     {
+        document.querySelector(selector).style.display = "block";
         document.querySelector(selector).innerHTML = name + ' từ ' + minValue + " đến " + maxValue;
         return false;
     } 
